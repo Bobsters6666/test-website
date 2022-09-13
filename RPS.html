@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Rock Paper Scissors</title>
+    <style>
+      body{
+        background-color: rgba(0, 0, 0, 0.88);
+      }
+
+      .RPS{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 20px;
+        row-gap: 50px;
+        padding: 150px 0 50px 0;
+      }
+
+      .RPS img, .stop-image{
+        width: 60px;
+        height: 60px;
+      }
+
+      .RPS button, .stop-button{
+        padding: 30px 30px 30px 30px;
+        border: 0;
+        border-radius: 30px;
+        background-color: white;
+      }
+
+      .stop-button, .announcement{
+        display: flex;
+        margin: auto;
+      }
+
+      .announcement, .point-tracker{
+        color: white;
+        font-size: 20px;
+        padding-bottom: 50px;
+        display: flex;
+        justify-content: center;
+      }
+      
+      .point-tracker{
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="RPS">
+      <button>
+        <img id="rock" onclick="winner('rock')" value="rock" src="rock.jpg">
+      </button>
+      <button>
+        <img id="paper" onclick="winner('paper')" value="paper" src="paper.png">
+      </button>
+      <button>
+        <img id="scissors" onclick="winner('scissors')" value="scissors" src="scissors.png">
+      </button>
+    </div>
+    <div id="announcement-button" class="announcement">
+      Choose your move
+    </div>
+    <button class="stop-button">
+      <img class="stop-image" onclick="reset()" src="stop.png">
+    </button>
+    <div id="point-tracker" class="point-tracker">
+      Points: 0
+    </div>
+  </body>
+
+  <script>
+    let announcement_button = document.getElementById('announcement-button')
+    let point_tracker = document.getElementById('point-tracker')
+
+    points = 0
+
+    AI_input = {
+      0: 'rock',
+      1: 'paper',
+      2: 'scissors'
+    }
+
+    function winner(player_move){
+      let AI_choice = Math.floor(Math.random()*3)
+      let AI_move = AI_input[AI_choice]
+      if(player_move == AI_move){
+        announcement_button.innerHTML = 'AI picked  *' + AI_move + '*  Draw!'
+      }
+      else if(player_move == 'rock' && AI_move == 'scissors' 
+      || player_move == 'paper' && AI_move == 'rock' || player_move == 'scissors' && AI_move == 'paper'){
+        announcement_button.innerHTML = 'AI picked  *' + AI_move + '*  You won!'
+        points++
+      }
+      else{
+        announcement_button.innerHTML = 'AI picked  *' + AI_move + '*  You lost :('
+        points--
+      }
+      point_tracker.innerHTML = 'Points: ' + points
+    }
+
+    function reset(){
+      point_tracker.innerHTML = 'Points: ' + 0
+      announcement_button.innerHTML = 'Game has been Reset'
+    }
+  </script>
+</html>
