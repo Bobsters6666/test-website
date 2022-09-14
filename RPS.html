@@ -7,18 +7,33 @@
         background-color: rgba(0, 0, 0, 0.88);
       }
 
+      .title{
+        color: white;
+        text-align: center;
+        font-size: 25px;
+        font-weight: 600;
+        padding-top: 100px;
+      }
       .RPS{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         column-gap: 20px;
         row-gap: 50px;
-        padding: 150px 0 50px 0;
+        padding: 50px 0 50px 0;
       }
 
       .RPS img, .stop-image{
         width: 60px;
         height: 60px;
+      }
+
+      .RPS button:hover, .stop-button:hover{
+        opacity: 0.8;
+      }
+      
+      .RPS button:active, .stop-button:active{
+        opacity: 0.65;
       }
 
       .RPS button, .stop-button{
@@ -47,22 +62,23 @@
     </style>
   </head>
   <body>
+    <div class="title">Get 10 Points to Win</div>
     <div class="RPS">
-      <button>
-        <img id="rock" onclick="winner('rock')" value="rock" src="rock.jpg">
+      <button id="rock" onclick="winner('rock')" value="rock">
+        <img src="rock.jpg">
       </button>
-      <button>
-        <img id="paper" onclick="winner('paper')" value="paper" src="paper.png">
+      <button id="paper" onclick="winner('paper')" value="paper" >
+        <img src="paper.png">
       </button>
-      <button>
-        <img id="scissors" onclick="winner('scissors')" value="scissors" src="scissors.png">
+      <button id="scissors" onclick="winner('scissors')" value="scissors">
+        <img src="scissors.png">
       </button>
     </div>
     <div id="announcement-button" class="announcement">
       Choose your move
     </div>
-    <button class="stop-button">
-      <img class="stop-image" onclick="reset()" src="stop.png">
+    <button class="stop-button" onclick="reset()">
+      <img class="stop-image" src="stop.png">
     </button>
     <div id="point-tracker" class="point-tracker">
       Points: 0
@@ -81,6 +97,12 @@
       2: 'scissors'
     }
 
+    function reset(){
+      point_tracker.innerHTML = 'Points: ' + 0
+      points = 0 
+      announcement_button.innerHTML = 'Game has been Reset'
+    }
+
     function winner(player_move){
       let AI_choice = Math.floor(Math.random()*3)
       let AI_move = AI_input[AI_choice]
@@ -91,6 +113,10 @@
       || player_move == 'paper' && AI_move == 'rock' || player_move == 'scissors' && AI_move == 'paper'){
         announcement_button.innerHTML = 'AI picked  *' + AI_move + '*  You won!'
         points++
+        if(points > 9){
+        alert('YOU WON!!!!!!!!')
+        reset()
+    }
       }
       else{
         announcement_button.innerHTML = 'AI picked  *' + AI_move + '*  You lost :('
@@ -99,10 +125,5 @@
       point_tracker.innerHTML = 'Points: ' + points
     }
 
-    function reset(){
-      points = 0
-      point_tracker.innerHTML = 'Points: ' + 0
-      announcement_button.innerHTML = 'Game has been Reset'
-    }
   </script>
 </html>
