@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Click Counter</title>
+    <style>
+      body{
+        background-color: rgb(233, 216, 226)
+       }
+      .main{
+      font-weight: 500;
+      font-size: 20px;
+      margin: auto;
+      margin-top: 40px;
+      width: 450px;
+      border-radius: 15px;
+      background-color: rgb(206, 34, 148);
+      color: white;
+      padding: 25px 15px 100px 50px;
+
+      }
+
+      .add-button, .minus-button, .more-button, .options-button, .add-button-2{
+        color: white;
+        background-color: rgb(218, 164, 215);
+        border: 0;
+        font-size: 13px;
+        width: 92%;
+        margin-top: 25px;
+        height: 35px;
+        border-radius: 5px;
+      }
+
+      .main button:hover{
+        opacity: 0.8
+      }
+
+      .main button:active{
+        opacity: 0.65;
+      }
+
+      .buttons{
+        display: flex;
+      }
+      
+      .textbox{
+        padding: 0 0 0 20px;
+        color: white;
+        font-size: 40px;
+        margin: 20px 0 0 0;
+        border-radius: 2px;
+        border: 0px;
+        background-color: rgb(219, 180, 217);
+        width: 76%;
+        height: 80px;
+      }
+      
+      .reset-button{
+        color: white;
+        width: 50px;
+        height: 80px;
+        border-radius: 3px;
+        margin: 20px 0 0 0;
+        padding: 0 6px 0 6px;
+        font-size: 25px;
+        background-color: rgb(218, 165, 215);
+        border: 2px solid rgb(215 215 215);
+      }
+
+      .reset-button:hover{
+        opacity: 0.8;
+      }
+
+      .reset-button:active{
+        opacity: 0.65;
+      }
+
+      .add-button-div{
+        display:flex;
+        width: 76%;
+      }
+
+      .add-button, .add-button-2{
+        height: 70px;
+        font-size: 28px;
+        margin-bottom: 10px;
+        background-color: rgb(233, 133, 211);
+      }
+
+      .add-button-2{
+        display: none;
+      }
+
+      .minus-button{
+        height: 45px;
+        font-size: 28px;
+      }
+    
+    </style>
+  </head>
+
+  <body>
+    <main class="main">
+      <div class='buttons'>
+        <input id="textbox" class="textbox" type="text">
+        <button onclick="reset()" class="reset-button">
+          x
+        </button>
+      </div>
+      <div id="add-button-div">
+        <button id="add-button" onclick="add()" class='add-button'>
+          +
+        </button>
+        <button id="add-button-2" onclick="add()" class='add-button-2'>
+          +
+        </button>
+      </div>
+      <div>
+        <button onclick="minus()" class="minus-button">
+          -
+        </button>
+      </div>
+      <div>
+        <button class="more-button">
+          More >>
+        </button>
+      </div>
+      <div>
+        <button class="options-button">
+          Options
+        </button>
+      </div>
+    </main>
+
+    <script>
+      let counter = 0 
+
+      const add_button_2 = document.getElementById('add-button-2')
+
+      function add(){
+        counter++
+        document.getElementById('textbox').value=counter
+      }
+
+      function minus(){
+        counter--
+        document.getElementById('textbox').value=counter
+      }
+
+      function reset(){
+        counter = 0
+        document.getElementById('textbox').value=counter
+      }
+
+      function expand(){  
+        add_button_2.style.display = 'block'
+      }
+    </script>
+
+  </body>
+</html>
