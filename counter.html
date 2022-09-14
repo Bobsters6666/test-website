@@ -19,12 +19,11 @@
 
       }
 
-      .add-button, .minus-button, .more-button, .options-button, .add-button-2{
+      .add-button, .minus-button, .more-button, .options-button, .add-button-2, .minus-button-2{
         color: white;
         background-color: rgb(218, 164, 215);
         border: 0;
         font-size: 13px;
-        width: 92%;
         margin-top: 25px;
         height: 35px;
         border-radius: 5px;
@@ -38,11 +37,13 @@
         opacity: 0.65;
       }
 
-      .buttons{
-        display: flex;
+      .more-button, .options-button{
+        width: 415px;
+        height: 38px;
       }
       
-      .textbox{
+      .textbox, .textbox-2{
+        display: inline-block;
         padding: 0 0 0 20px;
         color: white;
         font-size: 40px;
@@ -50,13 +51,13 @@
         border-radius: 2px;
         border: 0px;
         background-color: rgb(219, 180, 217);
-        width: 76%;
         height: 80px;
+        width: 87%;
       }
       
-      .reset-button{
+      .reset-button, .reset-button-2{
+        display: inline-block;
         color: white;
-        width: 50px;
         height: 80px;
         border-radius: 3px;
         margin: 20px 0 0 0;
@@ -64,19 +65,22 @@
         font-size: 25px;
         background-color: rgb(218, 165, 215);
         border: 2px solid rgb(215 215 215);
+        width: 13%;
       }
 
-      .reset-button:hover{
+      .reset-button:hover, .reset-button-2:hover{
         opacity: 0.8;
       }
 
-      .reset-button:active{
+      .reset-button:active, .reset-button-2:active{
         opacity: 0.65;
       }
 
-      .add-button-div{
-        display:flex;
-        width: 76%;
+      .add-button-div, .minus-button-div, .buttons{
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 40px;
+        padding-right: 35px;
       }
 
       .add-button, .add-button-2{
@@ -86,13 +90,22 @@
         background-color: rgb(233, 133, 211);
       }
 
-      .add-button-2{
+      .add-button-2, .minus-button-2{
         display: none;
       }
 
-      .minus-button{
-        height: 45px;
+      .minus-button, .minus-button-2{
+        height: 48px;
         font-size: 28px;
+      }
+
+      .output-1, .output-2{
+        display: flex;
+        width: 100%;
+      }
+
+      .output-2{
+        display: none;
       }
     
     </style>
@@ -100,13 +113,23 @@
 
   <body>
     <main class="main">
-      <div class='buttons'>
-        <input id="textbox" class="textbox" type="text">
-        <button onclick="reset()" class="reset-button">
-          x
-        </button>
+      <div class='buttons' id="buttons-div">
+        <div class="output-1" id="output-1">
+          <input id="textbox" class="textbox" type="text">
+          <button onclick="reset()" class="reset-button" id="reset-button">
+            x
+          </button>
+        </div>
+        
+        <div class="output-2" id="output-2">
+          <input id="textbox-2" class="textbox-2" type="text">
+          <button onclick="reset()" class="reset-button-2" id="reset-button-2">
+            x
+          </button>     
+        </div>
+            
       </div>
-      <div id="add-button-div">
+      <div class="add-button-div" id="add-button-div">
         <button id="add-button" onclick="add()" class='add-button'>
           +
         </button>
@@ -114,13 +137,16 @@
           +
         </button>
       </div>
-      <div>
+      <div class="minus-button-div" id="minus-button-div">
         <button onclick="minus()" class="minus-button">
+          -
+        </button>
+        <button onclick="minus()" class="minus-button-2" id="minus-button-2">
           -
         </button>
       </div>
       <div>
-        <button class="more-button">
+        <button onclick="expand()" class="more-button" id="expand-button">
           More >>
         </button>
       </div>
@@ -133,8 +159,15 @@
 
     <script>
       let counter = 0 
+      let expand_value = 'true'
 
+      const output_2 = document.getElementById('output-2')
+      const buttons_div = document.getElementById('buttons-div')
       const add_button_2 = document.getElementById('add-button-2')
+      const add_button_div = document.getElementById('add-button-div')
+      const minus_button_2 = document.getElementById('minus-button-2')
+      const minus_button_div = document.getElementById('minus-button-div')
+      const expand_button = document.getElementById('expand-button')
 
       function add(){
         counter++
@@ -152,7 +185,28 @@
       }
 
       function expand(){  
-        add_button_2.style.display = 'block'
+        if(expand_value == 'true'){
+          expand_value = 'false'
+          expand_button.innerHTML = '<< Less'
+
+          add_button_2.style.display = 'inline-block'
+          add_button_div.style.gridTemplateColumns = '1fr 1fr'
+          minus_button_2.style.display = 'inline-block'
+          minus_button_div.style.gridTemplateColumns = '1fr 1fr'
+          // output_2.style.display = 'inline-block'
+          // buttons_div.style.gridTemplateColumns = '1fr 1fr'
+        }
+
+        else{
+          expand_value = 'true'
+          expand_button.innerHTML = 'More >>'
+
+          add_button_2.style.display = 'none'
+          add_button_div.style.gridTemplateColumns = '1fr'
+          minus_button_2.style.display = 'none'
+          minus_button_div.style.gridTemplateColumns = '1fr'
+        }
+
       }
     </script>
 
