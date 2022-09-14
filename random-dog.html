@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Random Dog</title>
+    <style>
+      body{
+        background-color: rgba(0, 0, 0, 0.7)
+      }
+
+      .main{
+        margin: auto;
+        width: 600px;
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding-bottom: 50px;
+      }
+
+      .dog-image{
+        margin: auto;
+        width: 500px;
+        height: 500px;
+        border: 3px solid white;
+      }
+      .dog-text{
+        padding:10px 0 25px 0;
+      }
+
+      .dog-button{
+        margin-top: 30px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 1px solid white;
+        padding: 10px 12px 10px 12px;
+        border-radius: 4px;
+        font-size: 15px;
+      }
+
+      .dog-button:hover{
+        opacity: 0.8;
+      }
+
+      .dog-button:active{
+        opacity: 0.65;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main">
+      <div class="dog-text">Random Dog</div>
+      <div class="dog-image" id="dog-image">
+      </div>
+      <button class="dog-button" onclick="new_dog()">
+        New Dog
+      </button>
+    </main>
+  </body>
+  <script>
+    dog_image = document.getElementById('dog-image')
+
+    function new_dog(){
+      fetch('https://dog.ceo/api/breeds/image/random')
+      .then(response=>response.json())
+      .then(json => {
+        let dog_2= dog_image.innerHTML = (`<img src='${json.message}' width = 500 height = 500/>`);
+       })
+    }
+  </script>
+</html>
