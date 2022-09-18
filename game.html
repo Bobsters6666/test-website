@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fighting Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
+</head>
+<style>
+  body{
+    background-color: rgb(230, 207, 165);
+    font-family: 'Bungee Spice', cursive;
+  }
+
+  .main{
+    margin: auto;
+    max-width: 700px;
+  }
+
+  .main img{
+    display: flex;
+    margin: auto;
+    max-width: 70%;
+  }
+
+  .header{
+    display: flex;
+    justify-content: space-between;
+    font-size: 50px;
+    padding: 15px 0 70px 0;
+  }
+
+
+  .fighters{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px 0 30px;
+  }
+
+  .ryu-health, .ken-health{
+    font-size: 25px;
+    margin: 25px 0 20px 45px;
+  }
+
+  .ryu-attack, .ken-attack,.ryu-heal, .ken-heal, .ryu-train, .ken-train{
+    display: flex;
+    margin: auto;
+    font-family: 'Bungee Spice', cursive;
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 5px 10px 5px 10px;
+    transition: 0.15s;
+    margin-bottom: 6px;
+  }
+
+  .ryu-attack, .ken-attack{
+    margin-bottom: 6px;
+  }
+
+  .ryu-attack:hover, .ken-attack:hover, .ryu-heal:hover, .ken-heal:hover, .ryu-train:hover, .ken-train:hover{
+    opacity: 0.8;
+  }
+
+  .ryu-attack:active, .ken-attack:active{
+    background-color: red
+  }
+
+  .ryu-heal:active, .ken-heal:active{
+    background-color: green;
+  }
+
+  .ryu-train:active, .ken-train:active{
+    background-color: purple;
+  }
+
+  .ken{
+    transform: scaleX(-1)
+  }
+
+</style>
+<body>
+  <main class="main">
+    <div class="header">
+      <div id="ryu-score">
+        0
+      </div>
+      <div class="round-number">
+        Round 1
+      </div>
+      <div id="ken-score">
+        0
+      </div>
+    </div>
+    <div class="fighters">
+      <div class="ryu-div">
+        <img class="ryu" src="ryu.gif">
+        <div class="ryu-health" id="ryu-health">
+          Health: 15
+        </div>
+        <button class="ryu-attack" onclick="attack_sound.play(), attack()" id="ryu-attack-button">
+          Attack
+        </button>
+        <button class="ryu-heal" onclick="heal_sound.play(), heal()" id="ryu-heal-button">
+          Heal
+        </button>
+        <button class="ryu-train" onclick="train_sound.play(), train()" id="ryu-train-button">
+          Train
+        </button>
+      </div>
+      <div class="ken-div">
+        <img class="ken" src="ken.gif">
+        <div class="ken-health" id="ken-health">
+          Health: 17
+        </div>
+        <button class="ken-attack" onclick="attack_sound.play(), attack()" id = "ken-attack-button">
+          Attack
+        </button>
+        <button class="ken-heal" onclick="heal_sound.play(), heal()" id = "ken-heal-button">
+          Heal
+        </button>
+        <button class="ken-train" onclick="train_sound.play(), train()" id = "ken-train-button">
+          Train
+        </button>
+      </div>
+    </div>
+  </main>
+
+<script>
+  let ryu_health_text = document.getElementById('ryu-health')
+  let ken_health_text = document.getElementById('ken-health')
+  let ryu_attack_button = document.getElementById('ryu-attack-button')
+  let ken_attack_button = document.getElementById('ken-attack-button')
+  let ryu_heal_button = document.getElementById('ryu-heal-button')
+  let ken_heal_button = document.getElementById('ken-heal-button')
+  let ryu_train_button = document.getElementById('ryu-train-button')
+  let ken_train_button = document.getElementById('ken-train-button')
+  let ryu_score = document.getElementById('ryu-score')
+  let ken_score = document.getElementById('ken-score')
+
+  let ryu_health = 15
+  let ken_health = 17
+  let ryu_damage = 5
+  let ken_damage = 5
+  let ryu_heal = 0
+  let ken_heal = 0
+  let ryu_damage_multiplier = 5
+  let ken_damage_multiplier = 5
+  let ryu_turn = true
+  
+
+  const attack_sound = new Audio()
+  attack_sound.src = "swing.mp3"
+  
+  const heal_sound = new Audio()
+  heal_sound.src = "heal.mp3"
+
+  const train_sound = new Audio()
+  train_sound.src = "train.mp3"
+
+
+  function enable_button(){
+    if(ryu_turn){
+      ryu_attack_button.disabled = false
+      ryu_heal_button.disabled = false
+      ryu_train_button.disabled = false
+    }
+
+    else{
+      ken_attack_button.disabled = false
+      ken_heal_button.disabled = false
+      ken_train_button.disabled = false
+    }
+  }
+
+  function timer(){
+    ryu_damage = Math.floor(Math.random()*2 + ryu_damage_multiplier)
+    ken_damage = Math.floor(Math.random()*2 + ken_damage_multiplier)
+    ryu_heal = Math.floor(Math.random()*3 + 6)
+    ken_heal = Math.floor(Math.random()*3 + 6)
+
+    if(ryu_turn){
+      ken_attack_button.disabled = true
+      ken_heal_button.disabled = true
+      ken_train_button.disabled = true
+      setTimeout(enable_button, 10)
+    }
+    else{
+      ryu_attack_button.disabled = true
+      ryu_heal_button.disabled = true
+      ryu_train_button.disabled = true
+      setTimeout(enable_button, 10)
+    }
+  }
+    
+  setInterval(timer, 10)
+  setInterval(reset, 10)
+
+  function attack(){
+    if(ryu_turn){
+      ken_health -= ryu_damage
+      ken_health_text.innerHTML = "Health: " + ken_health
+      ryu_turn = false
+    }
+
+    else{
+      ryu_health -= ken_damage
+      ryu_health_text.innerHTML = "Health: " + ryu_health
+      ryu_turn = true
+    }
+  }
+
+  function heal(){
+    if(ryu_turn){
+      ryu_health += ryu_heal
+      ryu_health_text.innerHTML = "Health: " + ryu_health
+      ryu_turn = false
+    }
+
+    else{
+      ken_health += ken_heal
+      ken_health_text.innerHTML = "Health: " + ken_health
+      ryu_turn = true
+    }
+  }
+
+  function train(){
+    if(ryu_turn){
+      ryu_damage_multiplier ++
+      ryu_turn = false
+    }
+
+    else{
+      ken_damage_multiplier ++
+      ryu_turn = true
+    }
+  }
+
+  function reset(){
+    if(ken_health <= 0 || ryu_health <= 0){
+      ken_health = 17
+      ryu_health = 15
+      ken_health_text.innerHTML = "Health: " + ken_health
+      ryu_health_text.innerHTML = "Health: " + ryu_health
+      if(ken_health <= 0){
+        ryu_score.innerHTML = Number(ryu_score.innerHTML) + 1
+        alert('Player 1 Won')
+      }
+      else{
+        ken_score.innerHTML = Number(ken_score.innerHTML) + 1
+        alert('Player 2 Won')
+      }
+    }
+
+    else{}   
+  }
+
+</script>
+</body>
+</html>
